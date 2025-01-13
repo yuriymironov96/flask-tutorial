@@ -17,3 +17,4 @@ class Config:
     ADMINS = [os.environ.get('ADMIN_EMAIL')] if os.environ.get(
         'ADMIN_EMAIL') else []
     POSTS_PER_PAGE = 3
+    LANGUAGES = ['en', 'uk']

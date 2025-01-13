@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, g
+from flask_babel import get_locale
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from urllib.parse import urlsplit
@@ -95,6 +96,7 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()
+    g.locale = str(get_locale())
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])

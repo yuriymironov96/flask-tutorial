@@ -18,7 +18,7 @@
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('index') }}">Microblog</a>
+        <a class="navbar-brand" href="{{ url_for('index') }}">{{ _('Microblog') }}</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -55,7 +55,7 @@
                 class="nav-link"
                 aria-current="page"
                 href="{{ url_for('user', username=current_user.username) }}"
-                >Profile</a
+                >{{ _('Profile') }}</a
               >
             </li>
             <li class="nav-item">
@@ -84,5 +84,6 @@
       ></script>
     </div>
     {{ moment.include_moment() }}
+    {{ moment.lang(g.locale) }}
   </body>
 </html>
