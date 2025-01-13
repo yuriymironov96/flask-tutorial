@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from flask import render_template, flash, redirect, url_for, request, g
 from flask_babel import get_locale
 from flask_login import current_user, login_user, logout_user, login_required
+from langdetect import detect, LangDetectException
 import sqlalchemy as sa
 from urllib.parse import urlsplit
 from app import app, db
@@ -16,7 +17,12 @@ from app.email import send_password_reset_email
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
+        try:
+            language = detect(form.post.data)
+        except LangDetectException:
+            language = ''
+        post = Post(body=form.post.data, author=current_user,
+                    language=language)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
